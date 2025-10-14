@@ -5,9 +5,9 @@ SudokuBoard = [[int | None]]
 # right now it's at variable length, ideally each list is length 9
 
 class SudokuState:
-    board: SudokuBoard
+    board: list[list[int | None]]
 
-    def __init__(self, board: SudokuBoard):
+    def __init__(self, board: list[list[int | None]]):
         self.board = board
         if len(board) != 9:
             raise ArgumentError(board, "Sudoku board must have 9 rows")
@@ -36,9 +36,15 @@ class SudokuState:
                         return False
                     box.add(box_item)
         return True
+    
+    def all_assigned(self) -> bool:
+        for i in range(9):
+            if None in self.board[i]:
+                return False
+        return True
 
 if __name__ == '__main__':
-    with open('../data/sample.csv') as csv_file:
+    with open('data/sample.csv') as csv_file:
         reader = csv.reader(csv_file)
         board = [list(map(lambda x: int(x) if x else None, row)) for row in reader]
         print(f"Board: {board}")
