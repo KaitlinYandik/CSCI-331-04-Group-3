@@ -43,6 +43,11 @@ class SudokuState:
                 return False
         return True
 
+    def get_value(self, number) -> int | None:
+        i = number // 9
+        j = number % 9
+        return self.board[i][j]
+
 if __name__ == '__main__':
     with open('data/sample.csv') as csv_file:
         reader = csv.reader(csv_file)
