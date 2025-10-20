@@ -8,7 +8,7 @@ class CSP_Sudoku:
         self.domains = {}
         for box in self.variables:
             already_there = sudoku.get_value(box)
-            if already_there != None:
+            if already_there is not None:
                 self.domains[box] = [already_there]
             else:
                 self.domains[box] = list(range(1, 10))
@@ -19,7 +19,7 @@ class CSP_Sudoku:
     def select_unassigned_variable(self, assignment: SudokuState):
         result = None
         for var in self.variables:
-            if assignment.get_value(var) == None and (result == None or len(self.domains[var]) < len(self.domains[result])):
+            if assignment.get_value(var) is None and (result is None or len(self.domains[var]) < len(self.domains[result])):
                 result = var
         return result
     
