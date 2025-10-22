@@ -9,11 +9,8 @@ class AC3Solver(CSP_Sudoku):
     variables = set(range(81))
     domains = {variable: set(range(1, 10)) for variable in variables}
 
-    def __init__(self, sudoku: SudokuState):
-        super().__init__(sudoku)
-
     def constraint(self, xi, x, xj, y):
-        return x != y
+        return xj in self.neighbors[xi] and x != y
 
     def revise(self, xi, xj):
         revised = False
