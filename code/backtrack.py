@@ -4,17 +4,18 @@ import csv
 
 class CSP_Sudoku:
     def __init__(self, sudoku: SudokuState):
-        self.variables = list(range(0, 81))
+        self.variables = set(range(0, 81))
         self.domains = {}
         for box in self.variables:
             already_there = sudoku.get_value(box)
             if already_there is not None:
                 self.domains[box] = [already_there]
             else:
-                self.domains[box] = list(range(1, 10))
+                self.domains[box] = set(range(1, 10))
         self.neighbors = {}
         for box in self.variables:
-            self.neighbors[box] = list(filter(lambda x: x // 9 == box // 9 or x % 9 == box % 9 or (box // 3 % 3 == x // 3 % 3 and box // 9 // 3 == x // 9 // 3), list(range(0, 81))))
+            self.neighbors[box] = set(filter(lambda x: x // 9 == box // 9 or x % 9 == box % 9 or (box // 3 % 3 == x // 3 % 3 and box // 9 // 3 == x // 9 // 3), list(range(0, 81))))
+            self.neighbors[box].remove(box)
     
     def select_unassigned_variable(self, assignment: SudokuState):
         result = None
