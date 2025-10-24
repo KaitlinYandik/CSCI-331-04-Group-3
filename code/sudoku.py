@@ -1,9 +1,6 @@
 import csv
 from argparse import ArgumentError
 
-SudokuBoard = [[int | None]]
-# right now it's at variable length, ideally each list is length 9
-
 class SudokuState:
     board: list[list[int | None]]
 
