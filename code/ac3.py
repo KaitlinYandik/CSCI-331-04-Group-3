@@ -5,10 +5,6 @@ from sudoku import SudokuState
 
 
 class AC3Solver(CSP_Sudoku):
-    state: SudokuState
-    variables = set(range(81))
-    domains = {variable: set(range(1, 10)) for variable in variables}
-
     def constraint(self, xi, x, xj, y):
         return xj in self.neighbors[xi] and x != y
 
@@ -44,6 +40,7 @@ def main():
     solved = ac3.ac3()
     print(f"Solvable: {solved}")
     print(f"Domains: {ac3.domains}")
+    print(f"Solution: {ac3.backtracking_search().board}")
 
 if __name__ == "__main__":
     main()
