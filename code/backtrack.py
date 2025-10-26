@@ -10,7 +10,8 @@ class CSP_Sudoku:
         for box in self.variables:
             already_there = sudoku.get_value(box)
             if already_there is not None:
-                self.domains[box] = [already_there]
+                self.domains[box] = set()
+                self.domains[box].add(already_there)
             else:
                 self.domains[box] = set(range(1, 10))
         self.neighbors = {}
@@ -45,7 +46,8 @@ def main():
     sudoku = SudokuState(board)
     print(board)
     csp = CSP_Sudoku(sudoku)
-    print(csp.backtracking_search().board)
+    print(f"Domains: {csp.domains}")
+    print(f"Solution: {csp.backtracking_search().board}")
 
 if __name__ == "__main__":
     main()
