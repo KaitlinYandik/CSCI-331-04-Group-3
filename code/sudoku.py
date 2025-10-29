@@ -1,9 +1,6 @@
 import csv
 from argparse import ArgumentError
 
-SudokuBoard = [[int | None]]
-# right now it's at variable length, ideally each list is length 9
-
 class SudokuState:
     board: list[list[int | None]]
 
@@ -53,4 +50,4 @@ if __name__ == '__main__':
         reader = csv.reader(csv_file)
         board = [list(map(lambda x: int(x) if x else None, row)) for row in reader]
         print(f"Board: {board}")
-        print(f"Solvable: {SudokuState(board).validate()}")
+        print(f"Valid: {SudokuState(board).validate()}")
