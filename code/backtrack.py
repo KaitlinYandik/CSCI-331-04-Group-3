@@ -44,10 +44,10 @@ def main():
         reader = csv.reader(csv_file)
         board = [list(map(lambda x: int(x) if x else None, row)) for row in reader]
     sudoku = SudokuState(board)
-    print(board)
     csp = CSP_Sudoku(sudoku)
+    print(f"Board: \n{sudoku}")
     print(f"Domains: {csp.domains}")
-    print(f"Solution: {csp.backtracking_search().board}")
+    print(f"Solution: \n{csp.backtracking_search()}")
 
 if __name__ == "__main__":
     main()

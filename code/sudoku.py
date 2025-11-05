@@ -45,9 +45,19 @@ class SudokuState:
         j = number % 9
         return self.board[i][j]
 
+    def __str__(self):
+        result = ""
+        for (i, row) in enumerate(self.board):
+            for cell in row:
+                result += f"{cell or '*'} "
+            if i != len(self.board) - 1:
+                result += '\n'
+        return result
+
 if __name__ == '__main__':
-    with open('data/sample.csv') as csv_file:
+    with open('data/sudoku1.csv') as csv_file:
         reader = csv.reader(csv_file)
         board = [list(map(lambda x: int(x) if x else None, row)) for row in reader]
-        print(f"Board: {board}")
-        print(f"Valid: {SudokuState(board).validate()}")
+        state = SudokuState(board)
+        print(f"Board: \n{state}")
+        print(f"Solvable: {state.validate()}")

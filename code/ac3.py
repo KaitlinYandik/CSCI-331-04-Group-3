@@ -35,12 +35,11 @@ def main():
         reader = csv.reader(csv_file)
         board = [list(map(lambda x: int(x) if x else None, row)) for row in reader]
     sudoku = SudokuState(board)
-    print(board)
+    print(f"Board: \n{sudoku}")
     ac3 = AC3Solver(sudoku)
     solved = ac3.ac3()
-    print(f"Solvable: {solved}")
     print(f"Domains: {ac3.domains}")
-    print(f"Solution: {ac3.backtracking_search().board}")
+    print(f"Solution: \n{ac3.backtracking_search()}")
 
 if __name__ == "__main__":
     main()
