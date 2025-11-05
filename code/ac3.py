@@ -37,7 +37,7 @@ def main():
     sudoku = SudokuState(board)
     print(f"Board: \n{sudoku}")
     ac3 = AC3Solver(sudoku)
-    solved = ac3.ac3()
+    ac3.ac3()
     print(f"Domains: {ac3.domains}")
     print(f"Solution: \n{ac3.backtracking_search()}")
 
