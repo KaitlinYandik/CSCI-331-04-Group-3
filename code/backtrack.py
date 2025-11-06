@@ -7,6 +7,7 @@ class CSP_Sudoku:
         self.state = sudoku
         self.variables = set(range(0, 81))
         self.domains = {}
+        self.neighbors = sudoku.get_neighbors()
         for box in self.variables:
             already_there = sudoku.get_value(box)
             if already_there is not None:
@@ -14,10 +15,6 @@ class CSP_Sudoku:
                 self.domains[box].add(already_there)
             else:
                 self.domains[box] = set(range(1, 10))
-        self.neighbors = {}
-        for box in self.variables:
-            self.neighbors[box] = set(filter(lambda x: x // 9 == box // 9 or x % 9 == box % 9 or (box // 3 % 3 == x // 3 % 3 and box // 9 // 3 == x // 9 // 3), list(range(0, 81))))
-            self.neighbors[box].remove(box)
 
     def select_unassigned_variable(self, assignment: SudokuState):
         result = None
@@ -32,7 +29,7 @@ class CSP_Sudoku:
             return sudoku_state
         var = self.select_unassigned_variable(sudoku_state)
         for value in self.domains[var]:
-            new_state = SudokuState(copy.deepcopy(sudoku_state.board))
+            new_state = sudoku_state.copy()
             new_state.board[var // 9][var % 9] = value
             if new_state.validate():
                 result = self.backtracking_search(new_state)

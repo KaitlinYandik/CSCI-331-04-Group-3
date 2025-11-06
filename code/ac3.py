@@ -1,4 +1,5 @@
 import csv
+from queue import Queue
 
 from backtrack import CSP_Sudoku
 from sudoku import SudokuState
@@ -17,16 +18,17 @@ class AC3Solver(CSP_Sudoku):
         return revised
 
     def ac3(self):
-        # TODO: use implemented queue instead of list
-        queue = [(xi, xj) for xi in self.variables for xj in self.neighbors[xi]]
-        while queue:
-            (xi, xj) = queue.pop(0)
+        queue = Queue()
+        for arc in ((xi, xj) for xi in self.variables for xj in self.neighbors[xi]):
+            queue.put(arc)
+        while not queue.empty():
+            (xi, xj) = queue.get()
             if self.revise(xi, xj):
                 if len(self.domains[xi]) == 0:
                     return False
                 for xk in self.neighbors[xi]:
                     if xk != xj:
-                        queue.append((xi, xk))
+                        queue.put((xi, xk))
         return True
 
 

@@ -1,3 +1,4 @@
+import copy
 import csv
 from argparse import ArgumentError
 
@@ -45,6 +46,18 @@ class SudokuState:
         j = number % 9
         return self.board[i][j]
 
+    @staticmethod
+    def get_neighbors() -> dict[int, set[int]]:
+        neighbors = {}
+        for box in range(0, 81):
+            neighbors[box] = set(filter(lambda x: x // 9 == box // 9 or x % 9 == box % 9 or (
+                        box // 3 % 3 == x // 3 % 3 and box // 9 // 3 == x // 9 // 3), list(range(0, 81))))
+            neighbors[box].remove(box)
+        return neighbors
+
+    def copy(self):
+        return SudokuState(copy.deepcopy(self.board))
+
     def __str__(self):
         result = ""
         for (i, row) in enumerate(self.board):
@@ -60,4 +73,4 @@ if __name__ == '__main__':
         board = [list(map(lambda x: int(x) if x else None, row)) for row in reader]
         state = SudokuState(board)
         print(f"Board: \n{state}")
-        print(f"Solvable: {state.validate()}")
+        print(f"Valid: {state.validate()}")
