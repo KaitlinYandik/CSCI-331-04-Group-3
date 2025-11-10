@@ -23,16 +23,20 @@ class CSP_Sudoku:
                 result = var
         return result
 
-    def backtracking_search(self, sudoku_state: SudokuState = None):
+    def backtracking_search(self, sudoku_state: SudokuState = None, current_depth=1, depth_list: list=None) -> SudokuState | tuple[SudokuState, list]:
         sudoku_state = sudoku_state or self.state
+        if depth_list != None:
+            depth_list.append(current_depth)
         if sudoku_state.all_assigned():
+            if depth_list != None:
+                return sudoku_state, depth_list
             return sudoku_state
         var = self.select_unassigned_variable(sudoku_state)
         for value in self.domains[var]:
             new_state = sudoku_state.copy()
             new_state.board[var // 9][var % 9] = value
             if new_state.validate():
-                result = self.backtracking_search(new_state)
+                result = self.backtracking_search(new_state, current_depth + 1, depth_list)
                 if result:
                     return result
 
