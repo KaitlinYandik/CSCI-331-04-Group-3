@@ -1,5 +1,6 @@
 import csv
 from queue import Queue
+import sys
 
 from backtrack import CSP_Sudoku
 from sudoku import SudokuState
@@ -33,7 +34,7 @@ class AC3Solver(CSP_Sudoku):
 
 
 def main():
-    with open('data/sudoku1.csv') as csv_file:
+    with open(sys.argv[1]) as csv_file:
         reader = csv.reader(csv_file)
         board = [list(map(lambda x: int(x) if x else None, row)) for row in reader]
     sudoku = SudokuState(board)
